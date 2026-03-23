@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Github, Linkedin, Mail, ExternalLink, Download, ChevronDown, Menu, X, Send, ArrowRight, Package, BarChart3, Wrench, GraduationCap, MapPin, CheckCircle, Moon, Sun, Briefcase, Cpu, FlaskConical, TrendingUp, Shield, Layers, Database, Globe, Terminal, ChevronRight } from "lucide-react";
+import { Github, Linkedin, Mail, ExternalLink, Download, ChevronDown, Menu, X, Send, ArrowRight, Package, BarChart3, Wrench, GraduationCap, MapPin, CheckCircle, Moon, Sun, Briefcase, Cpu, FlaskConical, TrendingUp, Shield, Layers, Database, Globe, Terminal, ChevronRight, Thermometer, Award, Calendar, Building2 } from "lucide-react";
 
 const PROJECTS = [
   { title:"NGO Inventory Management System", subtitle:"Full-Stack · Real-Time · Multilingual", desc:"Production-grade donation tracking platform built for a real nonprofit. Manages the full receive → store → distribute pipeline with role-based access control, real-time multi-device sync, and bilingual support.", features:["4 User Roles with Auth","EN/ES Language Toggle","Dark & Light Mode","Real-Time KPI Dashboard","Shelf-Location Tracking","People Served Metrics","Excel Report Generation","Onboarding Tutorial"], tech:["React","Supabase","PostgreSQL","Recharts","SheetJS","Vercel"], liveUrl:"https://ngo-inventory-v2.vercel.app", codeUrl:"https://github.com/Vanshsingh1203/ngo-inventory-v2", color:"#00ced1", icon:<Package size={24}/>, featured:true },
+  { title:"ChainGuard — Pharma Cold Chain Dashboard", subtitle:"Risk Analytics · Predictive · Compliance", desc:"Premium real-time monitoring dashboard for pharmaceutical cold chain logistics. Tracks 500+ shipments, detects temperature excursions, predicts risks using a weighted scoring algorithm, and ensures GDP compliance with interactive visualizations.", features:["500+ Shipment Tracking","Risk Scoring Algorithm","Temperature Excursion Alerts","Route Risk Heatmap (US Map)","Cost Impact Calculator","PDF & Excel Export","Dark/Light Theme","Gantt Timeline View"], tech:["React","Recharts","jsPDF","SheetJS","date-fns","GitHub Pages"], liveUrl:"https://vanshsingh1203.github.io/chainguard-pharma-dashboard", codeUrl:"https://github.com/Vanshsingh1203/chainguard-pharma-dashboard", color:"#00d4aa", icon:<Thermometer size={24}/>, featured:true },
   { title:"Demand Forecasting & Inventory Optimization", subtitle:"Machine Learning · Time Series · Analytics", desc:"Interactive analytics engine analyzing 1.7M+ real retail sales records across 54 stores and 33 product families. Compares multiple forecasting methods and calculates optimal inventory parameters.", features:["Holt-Winters, ARIMA, XGBoost","EOQ & Safety Stock Calculator","ABC / Pareto Classification","What-If Simulator","Promotion Impact Analysis","Cost Curve Visualization","Best-Model Auto Selection","Interactive Filters"], tech:["Python","Streamlit","pandas","scikit-learn","XGBoost","Plotly","statsmodels"], liveUrl:"https://demand-forecast-9hjy8sujmqrpxzcxnlgacb.streamlit.app/", codeUrl:"https://github.com/Vanshsingh1203/demand-forecast", color:"#a78bfa", icon:<BarChart3 size={24}/>, featured:true },
-  { title:"Cold Chain Risk Analytics", subtitle:"Logistics · Risk Modeling · KPI Design", desc:"Analyzed 5,650 EPCIS logistics events across 305 cold-chain shipment histories to quantify dwell time, handoff frequency, and end-to-end supply chain risk with data-driven delay reduction strategies.", features:["5,650 Events Analyzed","305 Shipment Histories","Chain-Level KPI Development","Top 25% Risk Identification"], tech:["Python","pandas","SQL","KPI Dashboards"], color:"#ffd93d", icon:<TrendingUp size={24}/>, featured:false },
+  { title:"Cold Chain Risk Analytics", subtitle:"Logistics · Risk Modeling · KPI Design", desc:"Analyzed 5,650 EPCIS logistics events across 305 cold-chain shipment histories to quantify dwell time, handoff frequency, and end-to-end supply chain risk with data-driven delay reduction strategies.", features:["5,650 Events Analyzed","305 Shipment Histories","Chain-Level KPI Development","Top 25% Risk Identification"], tech:["Python","pandas","SQL","KPI Dashboards"], codeUrl:"https://github.com/Vanshsingh1203/cold-chain-temperature-excursion-prediction", color:"#ffd93d", icon:<TrendingUp size={24}/>, featured:false },
   { title:"EDM Process Optimization", subtitle:"Design of Experiments · Aerospace Manufacturing", desc:"Optimized Electrical Discharge Machining parameters using Box-Behnken Design on CNC die-sinking EDM for Haynes 25 superalloy, achieving dimensional accuracy within 10 microns for micro-hole fabrication.", features:["Box-Behnken DOE","10μm Accuracy","Haynes 25 Superalloy","Process Robustness"], tech:["DOE","Minitab","Statistical Analysis","CNC EDM"], color:"#ff6b6b", icon:<Cpu size={24}/>, featured:false },
-  { title:"Turbine Blade Thermal Evaluation", subtitle:"CFD Simulation · ANSYS · Heat Transfer", desc:"Conducted CFD and thermal simulations in ANSYS Workbench to evaluate turbine blade cooling strategies, identifying improvements projected to extend component service life by 20%.", features:["CFD & Thermal Sim","20% Life Extension","Conference Presentation","Team Collaboration"], tech:["ANSYS Workbench","ANSYS Fluent","CFD","SolidWorks"], color:"#48dbfb", icon:<FlaskConical size={24}/>, featured:false },
+  { title:"Turbine Blade Thermal Evaluation", subtitle:"CFD Simulation · ANSYS · Heat Transfer", desc:"Conducted CFD and thermal simulations in ANSYS Workbench to evaluate turbine blade cooling strategies, identifying improvements projected to extend component service life by 20%.", features:["CFD & Thermal Sim","20% Life Extension","Conference Presentation","Team Collaboration"], tech:["ANSYS Workbench","ANSYS Fluent","CFD","SolidWorks"], liveUrl:"https://www.taylorfrancis.com/chapters/edit/10.1201/9781003679622-25/comprehensive-thermal-evaluation-jet-turbine-blades-utilizing-ansys-simulation-vansh-singh-atul-das-chacko-pallickal-nikhil-rao-senthur-prabu?context=ubx&refId=90cdef82-6d96-475d-ac9e-2163c3108f58", color:"#48dbfb", icon:<FlaskConical size={24}/>, featured:false },
 ];
 
 const SKILLS = {
@@ -25,7 +26,7 @@ const TOOLS = [
   { name:"Git / GitHub", icon:"🔀" },{ name:"Vercel", icon:"▲" },{ name:"Minitab", icon:"📐" },{ name:"MATLAB", icon:"🧮" },
 ];
 
-const NAV = ["About","Projects","Skills","Resume","Contact"];
+const NAV = ["About","Projects","Skills","Experience","Resume","Contact"];
 const fadeUp = { hidden:{opacity:0,y:40}, visible:{opacity:1,y:0,transition:{duration:0.6,ease:"easeOut"}} };
 const stagger = { visible:{transition:{staggerChildren:0.1}} };
 const scaleIn = { hidden:{opacity:0,scale:0.9}, visible:{opacity:1,scale:1,transition:{duration:0.5}} };
@@ -33,9 +34,9 @@ const scaleIn = { hidden:{opacity:0,scale:0.9}, visible:{opacity:1,scale:1,trans
 const LIGHT = { bg:"#f8f9fc",card:"#ffffff",cardHover:"#f0f4ff",text:"#1a1a2e",textSec:"#4a4a6a",textMuted:"#6b7194",textFaint:"#9ca3c4",border:"#e4e8f4",accent:"#6c5ce7",accentGlow:"rgba(108,92,231,.08)",inputBg:"#fff",inputBorder:"#d0d5e8",sectionAlt:"#eef0f8",heroGrad1:"#0a0a1a",heroGrad2:"#16162e" };
 const DARK = { bg:"#0a0a14",card:"#12121f",cardHover:"#1a1a30",text:"#eef0ff",textSec:"#c4c6e0",textMuted:"#8b8db0",textFaint:"#5c5e80",border:"#1e1e35",accent:"#a78bfa",accentGlow:"rgba(167,139,250,.1)",inputBg:"#16162a",inputBorder:"#2d2d50",sectionAlt:"#0e0e1c",heroGrad1:"#050510",heroGrad2:"#0a0a1a" };
 
-function Section({children,id,dark,theme}) {
+function Section({children,id,dark,alt,theme}) {
   const ref=useRef(null); const isInView=useInView(ref,{once:true,margin:"-80px"});
-  const bg = dark ? `linear-gradient(180deg,${theme.heroGrad1},${theme.heroGrad2})` : (id==="skills"||id==="contact"?theme.sectionAlt:theme.bg);
+  const bg = dark ? `linear-gradient(180deg,${theme.heroGrad1},${theme.heroGrad2})` : (alt?theme.sectionAlt:theme.bg);
   return(<motion.section ref={ref} id={id} initial="hidden" animate={isInView?"visible":"hidden"} variants={stagger} style={{padding:"100px 24px",background:bg,position:"relative",transition:"background .4s"}}><div style={{maxWidth:1100,margin:"0 auto"}}>{children}</div></motion.section>);
 }
 
@@ -94,7 +95,7 @@ function Hero({theme}) {
           {typed}<span style={{color:"#a78bfa",animation:"blink 1s infinite"}}>_</span>
         </div>
         <p style={{fontSize:17,color:"#64748b",lineHeight:1.8,maxWidth:580,margin:"0 auto 40px"}}>
-          Engineering Management grad who builds tools that turn operational chaos into clean, data-driven systems. I make supply chains visible — from warehouse floors to interactive dashboards.
+          Engineering Management grad who builds tools that turn operational chaos into clean, data-driven systems. I make supply chains visible, from warehouse floors to interactive dashboards.
         </p>
         <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap"}}>
           <a href="#projects" onClick={e=>{e.preventDefault();document.getElementById("projects")?.scrollIntoView({behavior:"smooth"});}} style={{padding:"14px 30px",background:"linear-gradient(135deg,#6c5ce7,#a78bfa)",color:"#fff",borderRadius:14,fontSize:15,fontWeight:600,textDecoration:"none",display:"flex",alignItems:"center",gap:8,boxShadow:"0 4px 24px rgba(108,92,231,.4)"}}>View Projects <ArrowRight size={18}/></a>
@@ -110,19 +111,19 @@ function Hero({theme}) {
 }
 
 function About({theme}) {
-  const stats=[{value:"5",label:"Projects Built",icon:<Layers size={18}/>,clr:"#a78bfa"},{value:"1.7M+",label:"Records Analyzed",icon:<Database size={18}/>,clr:"#00ced1"},{value:"4+",label:"Forecasting Models",icon:<TrendingUp size={18}/>,clr:"#ff6b6b"},{value:"2",label:"Live Deployments",icon:<Globe size={18}/>,clr:"#ffd93d"}];
+  const stats=[{value:"6",label:"Projects Built",icon:<Layers size={18}/>,clr:"#a78bfa"},{value:"1.7M+",label:"Records Analyzed",icon:<Database size={18}/>,clr:"#00ced1"},{value:"4+",label:"Forecasting Models",icon:<TrendingUp size={18}/>,clr:"#ff6b6b"},{value:"3",label:"Live Deployments",icon:<Globe size={18}/>,clr:"#ffd93d"}];
   return(
     <Section id="about" theme={theme}>
       <SectionTitle title="About Me" subtitle="Part engineer, part analyst, full-time problem solver" theme={theme}/>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(320px,1fr))",gap:36}}>
         <motion.div variants={fadeUp}>
           <div style={{background:theme.card,borderRadius:20,padding:"36px 32px",transition:"background .4s"}}>
-            <p style={{fontSize:16,color:theme.textSec,lineHeight:1.9,margin:"0 0 18px"}}>I'm the kind of person who sees a messy spreadsheet and thinks <em>"this should be a dashboard."</em> Currently pursuing my MS in Engineering Management at <strong style={{color:theme.text}}>Northeastern University</strong>, building on a Mechanical Engineering foundation from <strong style={{color:theme.text}}>VIT</strong>.</p>
-            <p style={{fontSize:16,color:theme.textSec,lineHeight:1.9,margin:"0 0 18px"}}>At <strong style={{color:theme.text}}>Tata Motors</strong>, I built cost analytics dashboards for 100+ machines and analyzed supplier data across 20+ vendors. At <strong style={{color:theme.text}}>Team Assailing Falcons</strong>, I used lean principles to cut build time by 20% for a 12-member engineering team.</p>
-            <p style={{fontSize:16,color:theme.textSec,lineHeight:1.9,margin:0}}>Now I channel that same energy into software — building inventory systems for NGOs, forecasting demand across 54 stores, and turning supply chain complexity into something you can understand at a glance.</p>
+            <p style={{fontSize:16,color:theme.textSec,lineHeight:1.9,margin:"0 0 18px"}}>I build tools that bring clarity to complex operations. Currently pursuing my MS in Engineering Management at <strong style={{color:theme.text}}>Northeastern University</strong>, with a Mechanical Engineering foundation from <strong style={{color:theme.text}}>VIT</strong>.</p>
+            <p style={{fontSize:16,color:theme.textSec,lineHeight:1.9,margin:"0 0 18px"}}>At <strong style={{color:theme.text}}>Tata Motors</strong>, I developed cost analytics dashboards covering 100+ machines and analyzed supplier performance across 20+ vendors. With <strong style={{color:theme.text}}>Team Assailing Falcons</strong>, I applied lean principles to streamline the build process for a 12-member engineering team, reducing build time by 20%.</p>
+            <p style={{fontSize:16,color:theme.textSec,lineHeight:1.9,margin:0}}>Now I focus on full-stack development for real operational challenges: inventory management systems for nonprofits, demand forecasting engines processing 1.7M+ records, and cold chain compliance dashboards for pharmaceutical logistics. I turn data into decisions.</p>
           </div>
           <div style={{display:"flex",gap:12,marginTop:16}}>
-            {[{icon:<GraduationCap size={16}/>,text:"MS Engineering Management — Northeastern"},{icon:<GraduationCap size={16}/>,text:"BE Mechanical Engineering — VIT"}].map((e,i)=>(
+            {[{icon:<GraduationCap size={16}/>,text:"MS Engineering Management — Northeastern (Sep 2025 - Dec 2027)"},{icon:<GraduationCap size={16}/>,text:"BE Mechanical Engineering — VIT (Aug 2021 - Aug 2025)"}].map((e,i)=>(
               <div key={i} style={{flex:1,background:theme.card,borderRadius:14,padding:"16px 18px",display:"flex",alignItems:"center",gap:10,fontSize:13,color:theme.textSec,fontWeight:500,transition:"background .4s"}}><span style={{color:"#a78bfa"}}>{e.icon}</span>{e.text}</div>
             ))}
           </div>
@@ -188,9 +189,13 @@ function Projects({theme,dark}) {
                 <div><h4 style={{fontSize:15,fontWeight:700,color:"#fff",margin:0}}>{p.title}</h4><span style={{fontSize:11,color:p.color,fontWeight:600}}>{p.subtitle}</span></div>
               </div>
               <p style={{fontSize:13,color:"#94a3b8",lineHeight:1.7,margin:"0 0 14px"}}>{p.desc}</p>
-              <div style={{display:"flex",flexWrap:"wrap",gap:5}}>
+              <div style={{display:"flex",flexWrap:"wrap",gap:5,marginBottom:(p.codeUrl||p.liveUrl)?14:0}}>
                 {p.tech.map((t,i)=>(<span key={i} style={{fontSize:10,color:p.color,background:`${p.color}10`,padding:"3px 10px",borderRadius:12,fontWeight:600}}>{t}</span>))}
               </div>
+              {(p.codeUrl||p.liveUrl)&&<div style={{display:"flex",gap:6}}>
+                {p.liveUrl&&<a href={p.liveUrl} target="_blank" rel="noreferrer" style={{padding:"6px 12px",background:p.color,color:"#fff",borderRadius:8,fontSize:11,fontWeight:600,textDecoration:"none",display:"flex",alignItems:"center",gap:4}}><ExternalLink size={12}/>Publication</a>}
+                {p.codeUrl&&<a href={p.codeUrl} target="_blank" rel="noreferrer" style={{padding:"6px 12px",background:"rgba(255,255,255,.06)",color:"#e2e8f0",borderRadius:8,fontSize:11,fontWeight:600,textDecoration:"none",display:"flex",alignItems:"center",gap:4,border:"1px solid rgba(255,255,255,.1)"}}><Github size={12}/>Code</a>}
+              </div>}
             </motion.div>
           ))}
         </div>
@@ -201,7 +206,7 @@ function Projects({theme,dark}) {
 
 function Skills({theme}) {
   return(
-    <Section id="skills" theme={theme}>
+    <Section id="skills" alt theme={theme}>
       <SectionTitle title="Skills & Expertise" subtitle="Where engineering discipline meets data-driven thinking" theme={theme}/>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:20,marginBottom:48}}>
         {Object.entries(SKILLS).map(([cat,{icon,color,items}],idx)=>(
@@ -224,6 +229,88 @@ function Skills({theme}) {
           ))}
         </div>
       </motion.div>
+      <motion.div variants={fadeUp} style={{marginTop:48}}>
+        <h3 style={{fontSize:18,fontWeight:700,color:theme.text,textAlign:"center",marginBottom:20}}>Certifications</h3>
+        <div style={{display:"flex",justifyContent:"center",gap:16,flexWrap:"wrap"}}>
+          {[{name:"Six Sigma Green Belt",org:"Lean Six Sigma",icon:<Award size={20}/>,color:"#10b981"},{name:"CSWP",org:"Certified SolidWorks Professional",icon:<Wrench size={20}/>,color:"#f59e0b"}].map((c,i)=>(
+            <motion.div key={i} whileHover={{y:-3,transition:{duration:0.2}}} style={{background:theme.card,borderRadius:14,padding:"20px 28px",display:"flex",alignItems:"center",gap:14,cursor:"default",transition:"background .3s"}}>
+              <div style={{width:44,height:44,borderRadius:12,background:`${c.color}15`,display:"flex",alignItems:"center",justifyContent:"center",color:c.color}}>{c.icon}</div>
+              <div>
+                <div style={{fontSize:15,fontWeight:700,color:theme.text}}>{c.name}</div>
+                <div style={{fontSize:12,color:theme.textMuted}}>{c.org}</div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+    </Section>
+  );
+}
+
+function Experience({theme}) {
+  const experiences = [
+    {
+      title: "Structural Engineer",
+      company: "Team Assailing Falcons",
+      location: "Vellore, India",
+      period: "Oct 2023 - Aug 2024",
+      color: "#00ced1",
+      achievements: [
+        "Analyzed cost-performance trade-offs across design and manufacturing data, reducing machining and fabrication time by 10%",
+        "Led cross-functional coordination with 12-member team using lean principles (5S, process mapping), reducing build cycle time by 20%",
+        "Managed BOM tracking and procurement timelines across multiple suppliers ensuring on-time delivery with zero stockouts"
+      ]
+    },
+    {
+      title: "Cost Engineering Intern",
+      company: "Tata Motors",
+      location: "Pune, India",
+      period: "Aug 2023 - Oct 2023",
+      color: "#a78bfa",
+      achievements: [
+        "Built Excel-based cost analytics dashboard consolidating data from 100+ automated press machines, improving cost visibility by 40%",
+        "Performed machine utilization analysis identifying underperforming assets, contributing to 8% reduction in operating expenses",
+        "Evaluated material substitution through commodity cost analysis, achieving 12-15% weight reduction and 10% decrease in energy consumption",
+        "Integrated procurement and supplier data from 20+ vendors, improving pricing transparency for strategic sourcing"
+      ]
+    }
+  ];
+
+  return (
+    <Section id="experience" dark theme={theme}>
+      <SectionTitle title="Work Experience" subtitle="Building operational excellence through data and process improvement" light theme={theme}/>
+      <div style={{maxWidth:800,margin:"0 auto",position:"relative"}}>
+        <div style={{position:"absolute",left:20,top:0,bottom:0,width:2,background:"rgba(255,255,255,.1)"}}/>
+        {experiences.map((exp,idx)=>(
+          <motion.div key={idx} variants={fadeUp} style={{position:"relative",paddingLeft:56,marginBottom:idx===experiences.length-1?0:40}}>
+            <div style={{position:"absolute",left:12,top:6,width:18,height:18,borderRadius:"50%",background:exp.color,border:"3px solid rgba(10,10,20,.8)"}}/>
+            <div style={{background:"rgba(255,255,255,.03)",border:"1px solid rgba(255,255,255,.08)",borderRadius:16,padding:"28px 28px",backdropFilter:"blur(10px)"}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:12,marginBottom:16}}>
+                <div>
+                  <h3 style={{fontSize:20,fontWeight:700,color:"#fff",margin:"0 0 4px"}}>{exp.title}</h3>
+                  <div style={{display:"flex",alignItems:"center",gap:8,flexWrap:"wrap"}}>
+                    <span style={{fontSize:14,color:exp.color,fontWeight:600}}>{exp.company}</span>
+                    <span style={{width:4,height:4,borderRadius:2,background:"#475569"}}/>
+                    <span style={{fontSize:13,color:"#94a3b8"}}>{exp.location}</span>
+                  </div>
+                </div>
+                <div style={{display:"flex",alignItems:"center",gap:6,background:"rgba(255,255,255,.05)",padding:"6px 12px",borderRadius:8}}>
+                  <Calendar size={14} color="#94a3b8"/>
+                  <span style={{fontSize:13,color:"#94a3b8",fontWeight:500}}>{exp.period}</span>
+                </div>
+              </div>
+              <div style={{display:"flex",flexDirection:"column",gap:10}}>
+                {exp.achievements.map((a,i)=>(
+                  <div key={i} style={{display:"flex",alignItems:"flex-start",gap:10}}>
+                    <ChevronRight size={14} color={exp.color} style={{flexShrink:0,marginTop:3}}/>
+                    <span style={{fontSize:14,color:"#c4c6e0",lineHeight:1.6}}>{a}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
     </Section>
   );
 }
@@ -251,7 +338,7 @@ function Contact({theme}) {
   const submit=async(e)=>{e.preventDefault();setSending(true);try{const res=await fetch("https://formspree.io/f/mqeywzye",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(form)});if(res.ok){setStatus("sent");setForm({name:"",email:"",message:""});}else setStatus("error");}catch{setStatus("error");}setSending(false);};
   const inp={width:"100%",padding:"12px 16px",border:`1px solid ${theme.inputBorder}`,borderRadius:12,fontSize:14,outline:"none",boxSizing:"border-box",background:theme.inputBg,color:theme.text,transition:"all .3s"};
   return(
-    <Section id="contact" theme={theme}>
+    <Section id="contact" alt theme={theme}>
       <SectionTitle title="Get In Touch" subtitle="Open to supply chain, operations, and analytics opportunities" theme={theme}/>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:36,maxWidth:900,margin:"0 auto"}}>
         <motion.div variants={fadeUp}>
@@ -308,6 +395,7 @@ export default function App() {
       <About theme={theme}/>
       <Projects theme={theme} dark={dark}/>
       <Skills theme={theme}/>
+      <Experience theme={theme}/>
       <ResumeSection theme={theme}/>
       <Contact theme={theme}/>
       <Footer theme={theme}/>
