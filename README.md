@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="https://vanshsingh-portfolio.vercel.app">
+  <a href="https://vanshsingh1203.vercel.app/">
     <img src="https://img.shields.io/badge/🚀%20Live%20Site-Visit%20Portfolio-6c5ce7?style=for-the-badge" alt="Live Site" />
   </a>
 </p>
@@ -115,7 +115,7 @@ npm run build
 
 **Vansh Singh**
 
-- Portfolio: [vanshsingh-portfolio.vercel.app](https://vanshsingh-portfolio.vercel.app)
+- Portfolio: [vanshsingh-portfolio.vercel.app](https://vanshsingh1203.vercel.app/)
 - GitHub: [@Vanshsingh1203](https://github.com/Vanshsingh1203)
 - LinkedIn: [vansh-singh1203](https://linkedin.com/in/vansh-singh1203)
 - Email: singh.v2@northeastern.edu
