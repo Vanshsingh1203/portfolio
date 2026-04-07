@@ -1,0 +1,51 @@
+// ── Industrial Skeuomorphism — Light Chassis ──────────────────────────────
+export const LIGHT = {
+  bg:            "#e0e5ec",
+  card:          "#e0e5ec",
+  cardHover:     "#d8dde6",
+  text:          "#2d3436",
+  textSec:       "#4a5568",
+  textMuted:     "#636e72",
+  textFaint:     "#9aabbf",
+  border:        "#babecc",
+  borderLight:   "#ffffff",
+  borderDark:    "#a3b1c6",
+  accent:        "#ff4757",
+  accentDark:    "#cc1f2f",
+  accentGlow:    "rgba(255,71,87,0.12)",
+  inputBg:       "#e0e5ec",
+  sectionAlt:    "#d8dde6",
+  // Dark panels within light mode (hero, resume, footer)
+  darkPanel:     "#2d3436",
+  darkPanelSec:  "#3a4452",
+  darkPanelText: "#e0e5ec",
+  darkPanelMuted:"#8fa0b0",
+  darkPanelFaint:"#546470",
+  mode:          "light",
+};
+
+// ── Industrial Skeuomorphism — Dark Chassis ───────────────────────────────
+export const DARK = {
+  bg:            "#1e2235",
+  card:          "#1e2235",
+  cardHover:     "#252a3d",
+  text:          "#e0e5ec",
+  textSec:       "#a8b2d1",
+  textMuted:     "#6b7a9f",
+  textFaint:     "#3d4a6a",
+  border:        "#151929",
+  borderLight:   "#27304f",
+  borderDark:    "#12151f",
+  accent:        "#ff4757",
+  accentDark:    "#ff6b78",
+  accentGlow:    "rgba(255,71,87,0.15)",
+  inputBg:       "#1e2235",
+  sectionAlt:    "#191c2d",
+  // Dark panels within dark mode (hero, resume, footer — even darker)
+  darkPanel:     "#141828",
+  darkPanelSec:  "#1c2138",
+  darkPanelText: "#e0e5ec",
+  darkPanelMuted:"#6b7a9f",
+  darkPanelFaint:"#3d4a6a",
+  mode:          "dark",
+};

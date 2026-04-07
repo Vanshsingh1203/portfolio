@@ -1,13 +1,89 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Neumorphic shadow system (light chassis) ── */
+:root, [data-theme="light"] {
+  --shadow-card:     8px 8px 16px #babecc, -8px -8px 16px #ffffff;
+  --shadow-floating: 12px 12px 24px #babecc, -12px -12px 24px #ffffff, inset 1px 1px 0 rgba(255,255,255,0.6);
+  --shadow-pressed:  inset 6px 6px 12px #babecc, inset -6px -6px 12px #ffffff;
+  --shadow-recessed: inset 4px 4px 8px #babecc, inset -4px -4px 8px #ffffff;
+  --shadow-sm:       4px 4px 8px #babecc, -4px -4px 8px #ffffff;
+  --shadow-btn:      4px 4px 10px rgba(150,30,40,0.35), -2px -2px 6px rgba(255,140,150,0.25);
+}
+
+/* ── Neumorphic shadow system (dark chassis) ── */
+[data-theme="dark"] {
+  --shadow-card:     8px 8px 16px #151929, -8px -8px 16px #27304f;
+  --shadow-floating: 12px 12px 24px #151929, -12px -12px 24px #27304f, inset 1px 1px 0 rgba(255,255,255,0.04);
+  --shadow-pressed:  inset 6px 6px 12px #151929, inset -6px -6px 12px #27304f;
+  --shadow-recessed: inset 4px 4px 8px #151929, inset -4px -4px 8px #27304f;
+  --shadow-sm:       4px 4px 8px #151929, -4px -4px 8px #27304f;
+  --shadow-btn:      4px 4px 10px rgba(100,10,20,0.6), -2px -2px 6px rgba(255,100,110,0.12);
+}
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* ── Keyframes ── */
+@keyframes blink       { 0%,100%{opacity:1} 50%{opacity:0} }
+@keyframes ledGreen    { 0%,100%{opacity:1;box-shadow:0 0 8px 3px rgba(34,197,94,0.7)} 50%{opacity:0.6;box-shadow:0 0 3px 1px rgba(34,197,94,0.3)} }
+@keyframes ledRed      { 0%,100%{opacity:1;box-shadow:0 0 8px 3px rgba(255,71,87,0.7)} 50%{opacity:0.6;box-shadow:0 0 3px 1px rgba(255,71,87,0.3)} }
+@keyframes scanline    { 0%{background-position:0 0} 100%{background-position:0 4px} }
+@keyframes float1      { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+@keyframes float2      { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
+@keyframes progressFill{ from{width:0} to{width:var(--target-w)} }
+@keyframes counterUp   { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── Utility ── */
+.mono { font-family: 'JetBrains Mono', 'Roboto Mono', monospace; }
+
+.led-green {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #22c55e;
+  animation: ledGreen 2.2s ease-in-out infinite;
+  flex-shrink: 0;
 }
+.led-red {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #ff4757;
+  animation: ledRed 1.8s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* Noise overlay — simulates matte plastic texture */
+.chassis-texture::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: overlay;
+}
+
+/* ── Responsive nav ── */
+@media (max-width: 768px) {
+  .desktop-nav { display: none !important; }
+  .mobile-btn  { display: flex !important; }
+}
+@media (min-width: 769px) {
+  .mobile-btn { display: none !important; }
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #babecc; border-radius: 3px; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #27304f; }
+
+/* ── Custom cursor — hide default, canvas reticle takes over (desktop only) ── */
+@media (pointer: fine) {
+  *, *::before, *::after { cursor: none !important; }
+}
+
+/* ── Focus ring ── */
+:focus-visible { outline: 2px solid #ff4757; outline-offset: 2px; }

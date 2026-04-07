@@ -1,0 +1,161 @@
+import React from "react";
+import { Package, BarChart3, Wrench, Cpu, FlaskConical, TrendingUp, Thermometer, Factory } from "lucide-react";
+
+export const NAV = ["About", "Projects", "Skills", "Experience", "Resume", "Contact"];
+
+export const PROJECTS = [
+  {
+    title:    "NGO Inventory Management System",
+    subtitle: "Full-Stack · Real-Time · Multilingual",
+    desc:     "Production-grade donation tracking platform built for a real nonprofit. Manages the full receive → store → distribute pipeline with role-based access control, real-time multi-device sync, and bilingual support.",
+    features: ["4 User Roles with Auth", "EN/ES Language Toggle", "Dark & Light Mode", "Real-Time KPI Dashboard", "Shelf-Location Tracking", "People Served Metrics", "Excel Report Generation", "Onboarding Tutorial"],
+    tech:     ["React", "Supabase", "PostgreSQL", "Recharts", "SheetJS", "Vercel"],
+    liveUrl:  "https://ngo-inventory-v2.vercel.app",
+    codeUrl:  "https://github.com/Vanshsingh1203/ngo-inventory-v2",
+    color:    "#00ced1",
+    icon:     <Package size={22} />,
+    featured: true,
+  },
+  {
+    title:    "ChainGuard — Pharma Cold Chain Dashboard",
+    subtitle: "Risk Analytics · Predictive · Compliance",
+    desc:     "Premium real-time monitoring dashboard for pharmaceutical cold chain logistics. Tracks 500+ shipments, detects temperature excursions, predicts risks using a weighted scoring algorithm, and ensures GDP compliance.",
+    features: ["500+ Shipment Tracking", "Risk Scoring Algorithm", "Temperature Excursion Alerts", "Route Risk Heatmap (US Map)", "Cost Impact Calculator", "PDF & Excel Export", "Dark/Light Theme", "Gantt Timeline View"],
+    tech:     ["React", "Recharts", "jsPDF", "SheetJS", "date-fns", "GitHub Pages"],
+    liveUrl:  "https://vanshsingh1203.github.io/chainguard-pharma-dashboard",
+    codeUrl:  "https://github.com/Vanshsingh1203/chainguard-pharma-dashboard",
+    color:    "#00d4aa",
+    icon:     <Thermometer size={22} />,
+    featured: true,
+  },
+  {
+    title:    "Demand Forecasting & Inventory Optimization",
+    subtitle: "Machine Learning · Time Series · Analytics",
+    desc:     "Interactive analytics engine analyzing 1.7M+ real retail sales records across 54 stores and 33 product families. Compares multiple forecasting methods and calculates optimal inventory parameters.",
+    features: ["Holt-Winters, ARIMA, XGBoost", "EOQ & Safety Stock Calculator", "ABC / Pareto Classification", "What-If Simulator", "Promotion Impact Analysis", "Cost Curve Visualization", "Best-Model Auto Selection", "Interactive Filters"],
+    tech:     ["Python", "Streamlit", "pandas", "scikit-learn", "XGBoost", "Plotly", "statsmodels"],
+    liveUrl:  "https://demand-forecast-9hjy8sujmqrpxzcxnlgacb.streamlit.app/",
+    codeUrl:  "https://github.com/Vanshsingh1203/demand-forecast",
+    color:    "#a78bfa",
+    icon:     <BarChart3 size={22} />,
+    featured: true,
+  },
+  {
+    title:    "Manufacturing Operations Platform",
+    subtitle: "Enterprise · OEE · Capacity Planning · NPI",
+    desc:     "Enterprise-grade manufacturing dashboard tackling $1–2M/day visibility gaps in automotive production. Unifies 5+ data sources — production lines, NPI programs, BOM cost, and capacity planning — across 6 global facilities into one actionable real-time view.",
+    features: ["Live OEE Simulation (5s)", "6-Plant Global Capacity", "8 NPI Program Tracker", "What-If Scenario Simulator", "15-Supplier BOM Cost Analysis", "Bottleneck Detection", "Excel Export", "Global Search ( / )"],
+    tech:     ["React 18", "Vite", "Recharts", "SheetJS", "Lucide React", "GitHub Pages"],
+    liveUrl:  "https://vanshsingh1203.github.io/manufacturing-operations-platform",
+    codeUrl:  "https://github.com/Vanshsingh1203/manufacturing-operations-platform",
+    color:    "#f97316",
+    icon:     <Factory size={22} />,
+    featured: true,
+  },
+  {
+    title:    "Cold Chain Risk Analytics",
+    subtitle: "Logistics · Risk Modeling · KPI Design",
+    desc:     "Analyzed 5,650 EPCIS logistics events across 305 cold-chain shipment histories to quantify dwell time, handoff frequency, and end-to-end supply chain risk with data-driven delay reduction strategies.",
+    features: ["5,650 Events Analyzed", "305 Shipment Histories", "Chain-Level KPI Development", "Top 25% Risk Identification"],
+    tech:     ["Python", "pandas", "SQL", "KPI Dashboards"],
+    codeUrl:  "https://github.com/Vanshsingh1203/cold-chain-temperature-excursion-prediction",
+    color:    "#ffd93d",
+    icon:     <TrendingUp size={22} />,
+    featured: false,
+  },
+  {
+    title:    "EDM Process Optimization",
+    subtitle: "Design of Experiments · Aerospace Manufacturing",
+    desc:     "Optimized Electrical Discharge Machining parameters using Box-Behnken Design on CNC die-sinking EDM for Haynes 25 superalloy, achieving dimensional accuracy within 10 microns for micro-hole fabrication.",
+    features: ["Box-Behnken DOE", "10μm Accuracy", "Haynes 25 Superalloy", "Process Robustness"],
+    tech:     ["DOE", "Minitab", "Statistical Analysis", "CNC EDM"],
+    color:    "#ff6b6b",
+    icon:     <Cpu size={22} />,
+    featured: false,
+  },
+  {
+    title:    "Turbine Blade Thermal Evaluation",
+    subtitle: "CFD Simulation · ANSYS · Heat Transfer",
+    desc:     "Conducted CFD and thermal simulations in ANSYS Workbench to evaluate turbine blade cooling strategies, identifying improvements projected to extend component service life by 20%.",
+    features: ["CFD & Thermal Sim", "20% Life Extension", "Conference Presentation", "Team Collaboration"],
+    tech:     ["ANSYS Workbench", "ANSYS Fluent", "CFD", "SolidWorks"],
+    liveUrl:  "https://www.taylorfrancis.com/chapters/edit/10.1201/9781003679622-25/comprehensive-thermal-evaluation-jet-turbine-blades-utilizing-ansys-simulation-vansh-singh-atul-das-chacko-pallickal-nikhil-rao-senthur-prabu?context=ubx&refId=90cdef82-6d96-475d-ac9e-2163c3108f58",
+    color:    "#48dbfb",
+    icon:     <FlaskConical size={22} />,
+    featured: false,
+  },
+];
+
+export const SKILLS = {
+  "Supply Chain & Operations": {
+    icon:  <Package size={20} />,
+    color: "#00ced1",
+    items: ["Demand Forecasting & Planning", "Inventory Optimization (EOQ, ROP, SS)", "Warehouse Management (WMS)", "Procurement & Strategic Sourcing", "Logistics & Warehousing", "Capacity Planning & Scheduling", "Cost & Lead Time Analysis", "Service Level Optimization"],
+  },
+  "Analytics & Data Science": {
+    icon:  <BarChart3 size={20} />,
+    color: "#a78bfa",
+    items: ["Time Series (ARIMA, Holt-Winters)", "Machine Learning (XGBoost, Regression)", "Linear Programming & OR Models", "Statistical Process Control (SPC)", "KPI Design (OTIF, Cycle Time, Dwell)", "Root Cause & Variance Analysis", "ABC / Pareto Classification", "Monte Carlo Simulation"],
+  },
+  "Engineering & Quality": {
+    icon:  <Wrench size={20} />,
+    color: "#f59e0b",
+    items: ["Lean Manufacturing", "Six Sigma (Green Belt)", "DMAIC / 5S / Kaizen", "FMEA & Risk Analysis", "Process Mapping & Improvement", "BOM Management", "Supplier Performance Evaluation", "Continuous Improvement"],
+  },
+  "Mechanical & Design": {
+    icon:  <Cpu size={20} />,
+    color: "#ff6b6b",
+    items: ["SolidWorks (CSWP Certified)", "ANSYS Workbench & Fluent", "CFD & Thermal Simulation", "Finite Element Analysis (FEA)", "Design of Experiments (DOE)", "GD&T & Tolerancing", "Material Selection & Testing", "Manufacturing Process Planning"],
+  },
+};
+
+export const TOOLS = [
+  { name: "Python",           icon: "🐍" },
+  { name: "JavaScript",       icon: "⚡" },
+  { name: "React",            icon: "⚛️" },
+  { name: "SQL / MySQL",      icon: "🗄️" },
+  { name: "PostgreSQL",       icon: "🐘" },
+  { name: "Supabase",         icon: "⚡" },
+  { name: "pandas / NumPy",   icon: "📊" },
+  { name: "scikit-learn",     icon: "🤖" },
+  { name: "XGBoost",          icon: "🚀" },
+  { name: "Plotly / Recharts",icon: "📈" },
+  { name: "Streamlit",        icon: "🎯" },
+  { name: "Power BI",         icon: "📉" },
+  { name: "Tableau",          icon: "📋" },
+  { name: "Excel (Advanced)", icon: "📗" },
+  { name: "SolidWorks (CSWP)",icon: "🔧" },
+  { name: "ANSYS",            icon: "🔬" },
+  { name: "Git / GitHub",     icon: "🔀" },
+  { name: "Vercel",           icon: "▲" },
+  { name: "Minitab",          icon: "📐" },
+  { name: "MATLAB",           icon: "🧮" },
+];
+
+export const EXPERIENCES = [
+  {
+    title:        "Structural Engineer",
+    company:      "Team Assailing Falcons",
+    location:     "Vellore, India",
+    period:       "Oct 2023 – Aug 2024",
+    color:        "#00ced1",
+    achievements: [
+      "Analyzed cost-performance trade-offs across design and manufacturing data, reducing machining and fabrication time by 10%",
+      "Led cross-functional coordination with 12-member team using lean principles (5S, process mapping), reducing build cycle time by 20%",
+      "Managed BOM tracking and procurement timelines across multiple suppliers ensuring on-time delivery with zero stockouts",
+    ],
+  },
+  {
+    title:        "Cost Engineering Intern",
+    company:      "Tata Motors",
+    location:     "Pune, India",
+    period:       "Aug 2023 – Oct 2023",
+    color:        "#a78bfa",
+    achievements: [
+      "Built Excel-based cost analytics dashboard consolidating data from 100+ automated press machines, improving cost visibility by 40%",
+      "Performed machine utilization analysis identifying underperforming assets, contributing to 8% reduction in operating expenses",
+      "Evaluated material substitution through commodity cost analysis, achieving 12–15% weight reduction and 10% decrease in energy consumption",
+      "Integrated procurement and supplier data from 20+ vendors, improving pricing transparency for strategic sourcing",
+    ],
+  },
+];
