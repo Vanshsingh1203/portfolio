@@ -80,6 +80,18 @@ body {
 ::-webkit-scrollbar-thumb { background: #babecc; border-radius: 3px; }
 [data-theme="dark"] ::-webkit-scrollbar-thumb { background: #27304f; }
 
+/* ── Global mobile safety net ── */
+@media (max-width: 767px) {
+  /* Prevent horizontal overflow */
+  body { overflow-x: hidden; }
+
+  /* Comfortable tap targets */
+  a, button { min-height: 44px; }
+
+  /* Readable body text floor */
+  p, li, span { font-size: max(13px, 1em); }
+}
+
 /* ── Custom cursor — hide default, canvas reticle takes over (desktop only) ── */
 @media (pointer: fine) {
   *, *::before, *::after { cursor: none !important; }

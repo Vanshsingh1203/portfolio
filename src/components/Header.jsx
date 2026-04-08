@@ -4,13 +4,20 @@ import { Moon, Sun, Menu, X } from "lucide-react";
 import { NAV } from "../data";
 
 export default function Header({ activeSection, theme, dark, toggleDark }) {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled,  setScrolled]  = useState(false);
+  const [menuOpen,  setMenuOpen]  = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const fn = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", fn);
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+
+  // Close drawer on resize to desktop
+  useEffect(() => {
+    const fn = () => { if (window.innerWidth >= 769) setMenuOpen(false); };
+    window.addEventListener("resize", fn);
+    return () => window.removeEventListener("resize", fn);
   }, []);
 
   const scrollTo = (id) => {
@@ -18,157 +25,100 @@ export default function Header({ activeSection, theme, dark, toggleDark }) {
     setMenuOpen(false);
   };
 
-  const headerBg = scrolled
-    ? theme.bg
-    : "transparent";
-
-  const headerShadow = scrolled ? "var(--shadow-sm)" : "none";
-
   return (
     <header style={{
       position:      "fixed",
-      top:           0,
-      left:          0,
-      right:         0,
-      zIndex:        100,
-      padding:       scrolled ? "10px 28px" : "20px 28px",
-      background:    headerBg,
-      boxShadow:     headerShadow,
-      backdropFilter:scrolled ? "blur(12px)" : "none",
+      top:            0,
+      left:           0,
+      right:          0,
+      zIndex:         100,
+      padding:        scrolled ? "10px 20px" : "18px 20px",
+      background:     scrolled ? theme.bg : "transparent",
+      boxShadow:      scrolled ? "var(--shadow-sm)" : "none",
+      backdropFilter: scrolled ? "blur(12px)" : "none",
       transition:    "all 0.35s",
     }}>
-      <div style={{
-        maxWidth:       1100,
-        margin:         "0 auto",
-        display:        "flex",
-        justifyContent: "space-between",
-        alignItems:     "center",
-      }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 
         {/* Logo */}
-        <a
-          href="#hero"
-          onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+        <a href="#hero" onClick={e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
           style={{
-            fontFamily:     "'JetBrains Mono', monospace",
-            fontSize:        20,
-            fontWeight:      700,
-            color:           scrolled ? theme.text : "#e0e5ec",
-            textDecoration:  "none",
-            letterSpacing:   "0.04em",
-            transition:      "color 0.3s",
-            display:         "flex",
-            alignItems:      "center",
-            gap:             8,
+            fontFamily: "'JetBrains Mono', monospace", fontSize: 18, fontWeight: 700,
+            color: scrolled ? theme.text : "#e0e5ec", textDecoration: "none",
+            letterSpacing: "0.04em", transition: "color 0.3s",
+            display: "flex", alignItems: "center", gap: 7,
           }}
         >
-          {/* LED indicator */}
           <span className="led-green" />
           VS<span style={{ color: theme.accent }}>.</span>
         </a>
 
         {/* Desktop nav */}
-        <nav
-          className="desktop-nav"
-          style={{ display: "flex", gap: 4, alignItems: "center" }}
-        >
+        <nav className="desktop-nav" style={{ display: "flex", gap: 3, alignItems: "center" }}>
           {NAV.map(n => {
             const isActive = activeSection === n.toLowerCase();
             return (
-              <button
-                key={n}
-                onClick={() => scrollTo(n)}
-                style={{
-                  background:    isActive ? theme.accentGlow : "none",
-                  border:        isActive ? `1px solid ${theme.accent}30` : "1px solid transparent",
-                  borderRadius:  8,
-                  color:         isActive ? theme.accent : (scrolled ? theme.textMuted : "rgba(224,229,236,0.65)"),
-                  fontSize:      13,
-                  fontWeight:    isActive ? 700 : 500,
-                  fontFamily:    "'Inter', sans-serif",
-                  letterSpacing: isActive ? "0.02em" : 0,
-                  cursor:        "pointer",
-                  padding:       "7px 14px",
-                  transition:    "all 0.2s",
-                }}
-              >
+              <button key={n} onClick={() => scrollTo(n)} style={{
+                background:    isActive ? theme.accentGlow : "none",
+                border:        isActive ? `1px solid ${theme.accent}30` : "1px solid transparent",
+                borderRadius:   8,
+                color:          isActive ? theme.accent : (scrolled ? theme.textMuted : "rgba(224,229,236,0.6)"),
+                fontSize:       13,
+                fontWeight:     isActive ? 700 : 500,
+                letterSpacing:  isActive ? "0.02em" : 0,
+                cursor:        "pointer",
+                padding:       "8px 13px",
+                minHeight:      40,
+                transition:    "all 0.2s",
+              }}>
                 {n}
               </button>
             );
           })}
 
-          {/* Status + toggle */}
+          {/* Divider + toggle */}
           <div style={{
-            display:    "flex",
-            alignItems: "center",
-            gap:         10,
-            marginLeft:  12,
-            paddingLeft: 12,
-            borderLeft: `1px solid ${scrolled ? theme.border : "rgba(255,255,255,0.12)"}`,
+            display: "flex", alignItems: "center", gap: 8, marginLeft: 10,
+            paddingLeft: 10, borderLeft: `1px solid ${scrolled ? theme.border : "rgba(255,255,255,0.12)"}`,
           }}>
             <span style={{
-              fontFamily:    "'JetBrains Mono', monospace",
-              fontSize:       10,
-              fontWeight:     600,
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              color:          scrolled ? theme.textMuted : "rgba(224,229,236,0.45)",
-            }}>
-              ONLINE
-            </span>
+              fontFamily: "'JetBrains Mono', monospace", fontSize: 9, fontWeight: 600,
+              letterSpacing: "0.1em", textTransform: "uppercase",
+              color: scrolled ? theme.textMuted : "rgba(224,229,236,0.4)",
+            }}>ONLINE</span>
 
-            <motion.button
-              onClick={toggleDark}
-              whileTap={{ scale: 0.9 }}
-              style={{
-                background: scrolled ? theme.card : "rgba(255,255,255,0.08)",
-                border:     `1px solid ${scrolled ? theme.border : "rgba(255,255,255,0.12)"}`,
-                borderRadius:10,
-                padding:    "8px 10px",
-                cursor:     "pointer",
-                color:      scrolled ? theme.textSec : "rgba(224,229,236,0.8)",
-                display:    "flex",
-                alignItems: "center",
-                boxShadow:  scrolled ? "var(--shadow-sm)" : "none",
-                transition: "all 0.3s",
-              }}
-            >
+            <motion.button onClick={toggleDark} whileTap={{ scale: 0.88 }} style={{
+              background:  scrolled ? theme.card : "rgba(255,255,255,0.07)",
+              border:     `1px solid ${scrolled ? theme.border : "rgba(255,255,255,0.12)"}`,
+              borderRadius: 9, padding: "9px 10px", cursor: "pointer",
+              color: scrolled ? theme.textSec : "rgba(224,229,236,0.75)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              boxShadow: scrolled ? "var(--shadow-sm)" : "none", transition: "all 0.3s",
+              minHeight: 40, minWidth: 40,
+            }}>
               {dark ? <Sun size={15} /> : <Moon size={15} />}
             </motion.button>
           </div>
         </nav>
 
-        {/* Mobile hamburger */}
-        <div className="mobile-btn" style={{ alignItems: "center", gap: 10 }}>
-          <motion.button
-            onClick={toggleDark}
-            whileTap={{ scale: 0.9 }}
-            style={{
-              background:  "rgba(255,255,255,0.08)",
-              border:      "1px solid rgba(255,255,255,0.12)",
-              borderRadius:8,
-              padding:     "8px",
-              cursor:      "pointer",
-              color:       "#e0e5ec",
-              display:     "flex",
-            }}
-          >
-            {dark ? <Sun size={16} /> : <Moon size={16} />}
+        {/* Mobile controls */}
+        <div className="mobile-btn" style={{ alignItems: "center", gap: 8 }}>
+          <motion.button onClick={toggleDark} whileTap={{ scale: 0.88 }} style={{
+            background:  "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: 9, padding: "11px", cursor: "pointer",
+            color: "#e0e5ec", display: "flex", minHeight: 44, minWidth: 44,
+            alignItems: "center", justifyContent: "center",
+          }}>
+            {dark ? <Sun size={17} /> : <Moon size={17} />}
           </motion.button>
 
-          <motion.button
-            onClick={() => setMenuOpen(!menuOpen)}
-            whileTap={{ scale: 0.9 }}
-            style={{
-              background:  "rgba(255,255,255,0.08)",
-              border:      "1px solid rgba(255,255,255,0.12)",
-              borderRadius:8,
-              padding:     "8px",
-              cursor:      "pointer",
-              color:       scrolled ? theme.text : "#e0e5ec",
-              display:     "flex",
-            }}
-          >
+          <motion.button onClick={() => setMenuOpen(!menuOpen)} whileTap={{ scale: 0.88 }} style={{
+            background:  scrolled ? theme.card : "rgba(255,255,255,0.07)",
+            border:     `1px solid ${scrolled ? theme.border : "rgba(255,255,255,0.12)"}`,
+            borderRadius: 9, padding: "11px", cursor: "pointer",
+            color: scrolled ? theme.text : "#e0e5ec", display: "flex",
+            minHeight: 44, minWidth: 44, alignItems: "center", justifyContent: "center",
+          }}>
             {menuOpen ? <X size={20} /> : <Menu size={20} />}
           </motion.button>
         </div>
@@ -178,64 +128,48 @@ export default function Header({ activeSection, theme, dark, toggleDark }) {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -12 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
+            exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
             style={{
-              position:     "absolute",
-              top:          "100%",
-              left:          0,
-              right:         0,
-              background:    theme.card,
-              boxShadow:     "var(--shadow-card)",
-              padding:       "16px 24px 20px",
-              display:       "flex",
-              flexDirection: "column",
-              gap:            8,
+              position: "absolute", top: "100%", left: 0, right: 0,
+              background: theme.card, boxShadow: "var(--shadow-card)",
+              padding: "12px 16px 16px",
+              display: "flex", flexDirection: "column", gap: 4,
+              borderTop: `1px solid ${theme.border}`,
             }}
           >
-            {/* ONLINE status */}
+            {/* Status row */}
             <div style={{
-              display:    "flex",
-              alignItems: "center",
-              gap:         6,
-              paddingBottom: 12,
-              borderBottom: `1px solid ${theme.border}`,
-              marginBottom: 4,
+              display: "flex", alignItems: "center", gap: 6,
+              paddingBottom: 10, borderBottom: `1px solid ${theme.border}`, marginBottom: 4,
             }}>
               <span className="led-green" />
-              <span style={{
-                fontFamily:    "'JetBrains Mono', monospace",
-                fontSize:       10,
-                fontWeight:     600,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-                color:          theme.textMuted,
-              }}>
-                SYSTEM ONLINE
-              </span>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 9, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: theme.textMuted }}>SYSTEM ONLINE</span>
             </div>
 
-            {NAV.map(n => (
-              <button
-                key={n}
-                onClick={() => scrollTo(n)}
-                style={{
-                  background:   activeSection === n.toLowerCase() ? theme.accentGlow : "none",
-                  border:       "none",
-                  borderRadius: 8,
-                  color:        activeSection === n.toLowerCase() ? theme.accent : theme.textSec,
-                  fontSize:     15,
-                  fontWeight:   activeSection === n.toLowerCase() ? 700 : 500,
+            {NAV.map(n => {
+              const isActive = activeSection === n.toLowerCase();
+              return (
+                <button key={n} onClick={() => scrollTo(n)} style={{
+                  background:   isActive ? theme.accentGlow : "none",
+                  border:       `1px solid ${isActive ? `${theme.accent}30` : "transparent"}`,
+                  borderRadius:  9,
+                  color:         isActive ? theme.accent : theme.textSec,
+                  fontSize:      15,
+                  fontWeight:    isActive ? 700 : 500,
                   cursor:       "pointer",
                   textAlign:    "left",
-                  padding:      "11px 12px",
-                }}
-              >
-                {n}
-              </button>
-            ))}
+                  padding:      "13px 14px",
+                  minHeight:     52,
+                  width:        "100%",
+                  transition:   "all 0.15s",
+                }}>
+                  {n}
+                </button>
+              );
+            })}
           </motion.div>
         )}
       </AnimatePresence>
