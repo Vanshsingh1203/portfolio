@@ -23,11 +23,18 @@ export default function Experience({ theme }) {
       <SectionTitle label="Career" title="Work Experience" subtitle="Building operational excellence through data and process improvement" theme={theme} />
 
       <Stagger style={{ maxWidth: 820, margin: "0 auto", position: "relative" }}>
-        {/* Vertical connector pipe */}
-        <div style={{
-          position: "absolute", left: pipeLeft, top: 0, bottom: 0,
-          width: 4, borderRadius: 2, background: theme.border, boxShadow: "var(--shadow-recessed)",
-        }} />
+        {/* Vertical connector pipe — draws in from top */}
+        <motion.div
+          initial={{ scaleY: 0 }}
+          whileInView={{ scaleY: 1 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 1.4, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.2 }}
+          style={{
+            position: "absolute", left: pipeLeft, top: 0, bottom: 0,
+            width: 4, borderRadius: 2, background: theme.border, boxShadow: "var(--shadow-recessed)",
+            transformOrigin: "top",
+          }}
+        />
 
         {EXPERIENCES.map((exp, idx) => (
           <motion.div key={idx} variants={fadeUp} style={{

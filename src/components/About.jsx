@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useEffect, useState } from "react";
+import { motion, useInView } from "framer-motion";
 import { GraduationCap, Layers, Database, TrendingUp, Globe } from "lucide-react";
 import Section from "./ui/Section";
 import SectionTitle from "./ui/SectionTitle";
@@ -11,11 +11,58 @@ const fadeUp  = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, tr
 const scaleIn = { hidden: { opacity: 0, scale: 0.93 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.45, ease: [0.175, 0.885, 0.32, 1.275] } } };
 
 const STATS = [
-  { value: "6",    label: "Projects Built",     icon: <Layers size={16} />,   color: "#ff4757" },
-  { value: "1.7M+",label: "Records Analyzed",   icon: <Database size={16} />, color: "#00ced1" },
-  { value: "4+",   label: "Forecasting Models", icon: <TrendingUp size={16}/>,color: "#a78bfa" },
-  { value: "3",    label: "Live Deployments",   icon: <Globe size={16} />,    color: "#22c55e" },
+  { target: 6,   decimals: 0, suffix: "",   label: "Projects Built",     icon: <Layers size={16} />,    color: "#ff4757" },
+  { target: 1.7, decimals: 1, suffix: "M+", label: "Records Analyzed",   icon: <Database size={16} />,  color: "#00ced1" },
+  { target: 4,   decimals: 0, suffix: "+",  label: "Forecasting Models", icon: <TrendingUp size={16} />, color: "#a78bfa" },
+  { target: 3,   decimals: 0, suffix: "",   label: "Live Deployments",   icon: <Globe size={16} />,     color: "#22c55e" },
 ];
+
+function StatCard({ s, theme, isMobile }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-40px" });
+  const [display, setDisplay] = useState(s.decimals > 0 ? "0.0" : "0");
+
+  useEffect(() => {
+    if (!isInView) return;
+    const duration = 1500;
+    const start = performance.now();
+    const tick = (now) => {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const v = eased * s.target;
+      setDisplay(s.decimals > 0 ? v.toFixed(s.decimals) : Math.floor(v).toString());
+      if (p < 1) requestAnimationFrame(tick);
+      else setDisplay(s.decimals > 0 ? s.target.toFixed(s.decimals) : s.target.toString());
+    };
+    requestAnimationFrame(tick);
+  }, [isInView]); // eslint-disable-line
+
+  return (
+    <motion.div
+      ref={ref}
+      variants={scaleIn}
+      whileHover={{ y: -4, boxShadow: "var(--shadow-floating)", transition: { duration: 0.22 } }}
+      style={{
+        background: theme.card, borderRadius: 14, padding: isMobile ? "16px 14px" : "22px 18px",
+        boxShadow: "var(--shadow-card)", cursor: "default", transition: "background 0.4s",
+        position: "relative", overflow: "hidden",
+      }}
+    >
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: s.color, opacity: 0.6 }} />
+      <div style={{
+        width: 32, height: 32, borderRadius: "50%", background: theme.sectionAlt,
+        boxShadow: "var(--shadow-recessed)", display: "flex", alignItems: "center",
+        justifyContent: "center", color: s.color, marginBottom: 10,
+      }}>
+        {s.icon}
+      </div>
+      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isMobile ? 22 : 28, fontWeight: 700, color: theme.text, letterSpacing: "-1px", lineHeight: 1, marginBottom: 4 }}>
+        {display}{s.suffix}
+      </div>
+      <div style={{ fontSize: 10, color: theme.textMuted, fontWeight: 600, letterSpacing: "0.04em", textTransform: "uppercase" }}>{s.label}</div>
+    </motion.div>
+  );
+}
 const EDU = [
   { degree: "MS Engineering Management", school: "Northeastern University", period: "Sep 2025 – Dec 2027" },
   { degree: "BE Mechanical Engineering",  school: "VIT University",         period: "Aug 2021 – Aug 2025" },
@@ -86,27 +133,7 @@ export default function About({ theme }) {
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: isMobile ? 10 : 14 }}>
             {STATS.map((s, i) => (
-              <motion.div key={i} variants={scaleIn}
-                whileHover={{ y: -4, boxShadow: "var(--shadow-floating)", transition: { duration: 0.22 } }}
-                style={{
-                  background: theme.card, borderRadius: 14, padding: isMobile ? "16px 14px" : "22px 18px",
-                  boxShadow: "var(--shadow-card)", cursor: "default", transition: "background 0.4s",
-                  position: "relative", overflow: "hidden",
-                }}
-              >
-                <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: s.color, opacity: 0.6 }} />
-                <div style={{
-                  width: 32, height: 32, borderRadius: "50%", background: theme.sectionAlt,
-                  boxShadow: "var(--shadow-recessed)", display: "flex", alignItems: "center",
-                  justifyContent: "center", color: s.color, marginBottom: 10,
-                }}>
-                  {s.icon}
-                </div>
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isMobile ? 22 : 28, fontWeight: 700, color: theme.text, letterSpacing: "-1px", lineHeight: 1, marginBottom: 4 }}>
-                  {s.value}
-                </div>
-                <div style={{ fontSize: 10, color: theme.textMuted, fontWeight: 600, letterSpacing: "0.04em", textTransform: "uppercase" }}>{s.label}</div>
-              </motion.div>
+              <StatCard key={i} s={s} theme={theme} isMobile={isMobile} />
             ))}
           </div>
 

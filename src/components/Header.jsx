@@ -26,18 +26,23 @@ export default function Header({ activeSection, theme, dark, toggleDark }) {
   };
 
   return (
-    <header style={{
-      position:      "fixed",
-      top:            0,
-      left:           0,
-      right:          0,
-      zIndex:         100,
-      padding:        scrolled ? "10px 20px" : "18px 20px",
-      background:     scrolled ? theme.bg : "transparent",
-      boxShadow:      scrolled ? "var(--shadow-sm)" : "none",
-      backdropFilter: scrolled ? "blur(12px)" : "none",
-      transition:    "all 0.35s",
-    }}>
+    <motion.header
+      initial={{ y: -72, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.55, ease: [0.175, 0.885, 0.32, 1.275] }}
+      style={{
+        position:      "fixed",
+        top:            0,
+        left:           0,
+        right:          0,
+        zIndex:         100,
+        padding:        scrolled ? "10px 20px" : "18px 20px",
+        background:     scrolled ? theme.bg : "transparent",
+        boxShadow:      scrolled ? "var(--shadow-sm)" : "none",
+        backdropFilter: scrolled ? "blur(12px)" : "none",
+        transition:    "padding 0.35s, background 0.35s, box-shadow 0.35s",
+      }}
+    >
       <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
 
         {/* Logo */}
@@ -49,8 +54,30 @@ export default function Header({ activeSection, theme, dark, toggleDark }) {
             display: "flex", alignItems: "center", gap: 7,
           }}
         >
-          <span className="led-green" />
-          VS<span style={{ color: theme.accent }}>.</span>
+          <motion.span
+            className="led-green"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.55, duration: 0.35, type: "spring", stiffness: 500, damping: 18 }}
+          />
+          {["V", "S"].map((c, i) => (
+            <motion.span
+              key={c}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 + i * 0.13, duration: 0.3, ease: [0.175, 0.885, 0.32, 1.275] }}
+            >
+              {c}
+            </motion.span>
+          ))}
+          <motion.span
+            style={{ color: theme.accent }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.98, duration: 0.4 }}
+          >
+            .
+          </motion.span>
         </a>
 
         {/* Desktop nav */}
@@ -59,8 +86,8 @@ export default function Header({ activeSection, theme, dark, toggleDark }) {
             const isActive = activeSection === n.toLowerCase();
             return (
               <button key={n} onClick={() => scrollTo(n)} style={{
-                background:    isActive ? theme.accentGlow : "none",
-                border:        isActive ? `1px solid ${theme.accent}30` : "1px solid transparent",
+                background:    "none",
+                border:        "1px solid transparent",
                 borderRadius:   8,
                 color:          isActive ? theme.accent : (scrolled ? theme.textMuted : "rgba(224,229,236,0.6)"),
                 fontSize:       13,
@@ -69,9 +96,22 @@ export default function Header({ activeSection, theme, dark, toggleDark }) {
                 cursor:        "pointer",
                 padding:       "8px 13px",
                 minHeight:      40,
-                transition:    "all 0.2s",
+                position:      "relative",
+                transition:    "color 0.2s, font-weight 0.2s",
               }}>
-                {n}
+                {isActive && (
+                  <motion.div
+                    layoutId="nav-pill"
+                    style={{
+                      position: "absolute", inset: 0, borderRadius: 8,
+                      background: theme.accentGlow,
+                      border: `1px solid ${theme.accent}30`,
+                      zIndex: 0,
+                    }}
+                    transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                  />
+                )}
+                <span style={{ position: "relative", zIndex: 1 }}>{n}</span>
               </button>
             );
           })}
@@ -173,6 +213,6 @@ export default function Header({ activeSection, theme, dark, toggleDark }) {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   );
 }
