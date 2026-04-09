@@ -8,8 +8,14 @@ export default function Header({ activeSection, theme, dark, onToggle }) {
     const r = e.currentTarget.getBoundingClientRect();
     onToggle({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
   };
-  const [scrolled,  setScrolled]  = useState(false);
-  const [menuOpen,  setMenuOpen]  = useState(false);
+  const [scrolled,   setScrolled]  = useState(false);
+  const [menuOpen,   setMenuOpen]  = useState(false);
+  const [dotLooped,  setDotLooped] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setDotLooped(true), 1400);
+    return () => clearTimeout(t);
+  }, []);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
@@ -77,11 +83,21 @@ export default function Header({ activeSection, theme, dark, onToggle }) {
           <motion.span
             style={{ color: theme.accent }}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.98, duration: 0.4 }}
+            animate={dotLooped ? { opacity: [1, 0.22, 1] } : { opacity: 1 }}
+            transition={dotLooped
+              ? { duration: 2.4, repeat: Infinity, ease: "easeInOut" }
+              : { delay: 0.98, duration: 0.4 }}
           >
             .
           </motion.span>
+          {/* Blinking terminal cursor */}
+          <motion.span
+            aria-hidden
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 0, 1, 1, 0, 0] }}
+            transition={{ delay: 1.7, duration: 1.1, times: [0, 0.01, 0.01, 0.55, 0.55, 1], repeat: Infinity, ease: "linear" }}
+            style={{ color: theme.accent, marginLeft: -1, userSelect: "none", fontWeight: 300 }}
+          >_</motion.span>
         </a>
 
         {/* Desktop nav */}
