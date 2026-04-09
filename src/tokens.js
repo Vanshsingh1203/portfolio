@@ -26,26 +26,26 @@ export const LIGHT = {
 
 // ── Industrial Skeuomorphism — Dark Chassis ───────────────────────────────
 export const DARK = {
-  bg:            "#1e2235",
-  card:          "#1e2235",
-  cardHover:     "#252a3d",
-  text:          "#e0e5ec",
-  textSec:       "#a8b2d1",
-  textMuted:     "#6b7a9f",
-  textFaint:     "#3d4a6a",
-  border:        "#151929",
-  borderLight:   "#27304f",
-  borderDark:    "#12151f",
+  bg:            "#080b14",   // near-black navy — the floor
+  card:          "#0f1623",   // lifted surface — clearly distinct from bg
+  cardHover:     "#161e30",
+  text:          "#e8edf5",   // bright but not harsh white
+  textSec:       "#8fa3c0",
+  textMuted:     "#546070",
+  textFaint:     "#2a3445",
+  border:        "#1a2235",   // visible edge
+  borderLight:   "#253048",
+  borderDark:    "#050810",
   accent:        "#ff4757",
   accentDark:    "#ff6b78",
-  accentGlow:    "rgba(255,71,87,0.15)",
-  inputBg:       "#1e2235",
-  sectionAlt:    "#191c2d",
-  // Dark panels within dark mode (hero, resume, footer — even darker)
-  darkPanel:     "#141828",
-  darkPanelSec:  "#1c2138",
-  darkPanelText: "#e0e5ec",
-  darkPanelMuted:"#6b7a9f",
-  darkPanelFaint:"#3d4a6a",
+  accentGlow:    "rgba(255,71,87,0.16)",
+  inputBg:       "#060911",   // recessed inputs sink below card
+  sectionAlt:    "#060911",   // alternate sections — darkest surface
+  // Dark panels (hero, resume, footer) — blacker than bg
+  darkPanel:     "#040710",
+  darkPanelSec:  "#0b1020",
+  darkPanelText: "#e8edf5",
+  darkPanelMuted:"#546070",
+  darkPanelFaint:"#2a3445",
   mode:          "dark",
 };

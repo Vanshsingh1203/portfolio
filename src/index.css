@@ -10,14 +10,14 @@
   --shadow-btn:      4px 4px 10px rgba(150,30,40,0.35), -2px -2px 6px rgba(255,140,150,0.25);
 }
 
-/* ── Neumorphic shadow system (dark chassis) ── */
+/* ── Neumorphic shadow system (dark chassis — base #0f1623) ── */
 [data-theme="dark"] {
-  --shadow-card:     8px 8px 16px #151929, -8px -8px 16px #27304f;
-  --shadow-floating: 12px 12px 24px #151929, -12px -12px 24px #27304f, inset 1px 1px 0 rgba(255,255,255,0.04);
-  --shadow-pressed:  inset 6px 6px 12px #151929, inset -6px -6px 12px #27304f;
-  --shadow-recessed: inset 4px 4px 8px #151929, inset -4px -4px 8px #27304f;
-  --shadow-sm:       4px 4px 8px #151929, -4px -4px 8px #27304f;
-  --shadow-btn:      4px 4px 10px rgba(100,10,20,0.6), -2px -2px 6px rgba(255,100,110,0.12);
+  --shadow-card:     6px 6px 14px #050810, -6px -6px 14px #182035;
+  --shadow-floating: 12px 12px 24px #050810, -12px -12px 24px #182035, inset 1px 1px 0 rgba(255,255,255,0.03);
+  --shadow-pressed:  inset 5px 5px 12px #050810, inset -5px -5px 12px #182035;
+  --shadow-recessed: inset 4px 4px 8px #050810, inset -4px -4px 8px #182035;
+  --shadow-sm:       3px 3px 8px #050810, -3px -3px 8px #182035;
+  --shadow-btn:      4px 4px 12px rgba(60,0,10,0.7), -2px -2px 6px rgba(255,80,90,0.08);
 }
 
 body {
@@ -78,7 +78,7 @@ body {
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #babecc; border-radius: 3px; }
-[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #27304f; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: #1a2235; }
 
 /* ── Global mobile safety net ── */
 @media (max-width: 767px) {
