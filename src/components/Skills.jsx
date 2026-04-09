@@ -4,11 +4,11 @@ import { ChevronRight, Award, Wrench } from "lucide-react";
 import Section from "./ui/Section";
 import SectionTitle from "./ui/SectionTitle";
 import Card from "./ui/Card";
+import { Stagger } from "./ui/ScrollReveal";
 import { SKILLS, TOOLS } from "../data";
 import { useBreakpoint } from "../hooks/useBreakpoint";
 
 const scaleIn = { hidden: { opacity: 0, scale: 0.92 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.45, ease: [0.175, 0.885, 0.32, 1.275] } } };
-const fadeUp  = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.175, 0.885, 0.32, 1.275] } } };
 
 const CERTS = [
   { name: "Six Sigma Green Belt", org: "Lean Six Sigma Institute",          icon: <Award size={20} />,  color: "#22c55e" },
@@ -25,12 +25,13 @@ export default function Skills({ theme }) {
       <SectionTitle label="Capabilities" title="Skills & Expertise" subtitle="Where engineering discipline meets data-driven thinking" theme={theme} />
 
       {/* Skill panels */}
-      <div style={{
+      <Stagger style={{
         display: "grid", gridTemplateColumns: `repeat(auto-fit, minmax(${minCardW}, 1fr))`,
         gap: isMobile ? 12 : 18, marginBottom: isMobile ? 32 : 48,
       }}>
         {Object.entries(SKILLS).map(([cat, { icon, color, items }], idx) => (
-          <Card key={idx} theme={theme} screws vents style={{ padding: cardPad }}>
+          <motion.div key={idx} variants={scaleIn}>
+          <Card theme={theme} screws vents style={{ padding: cardPad }}>
             <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16, marginTop: 4 }}>
               <div style={{
                 width: 40, height: 40, borderRadius: "50%", background: theme.sectionAlt,
@@ -59,15 +60,16 @@ export default function Skills({ theme }) {
               ))}
             </div>
           </Card>
+          </motion.div>
         ))}
-      </div>
+      </Stagger>
 
       {/* Tools */}
-      <motion.div variants={fadeUp} style={{ marginBottom: isMobile ? 32 : 48 }}>
+      <div style={{ marginBottom: isMobile ? 32 : 48 }}>
         <div style={{ textAlign: "center", marginBottom: 18 }}>
           <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: theme.textMuted }}>Tools & Technologies</span>
         </div>
-        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: isMobile ? 7 : 9 }}>
+        <Stagger style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: isMobile ? 7 : 9 }}>
           {TOOLS.map((t, i) => (
             <motion.div key={i} variants={scaleIn}
               whileHover={{ y: -3, boxShadow: "var(--shadow-floating)", transition: { duration: 0.18 } }}
@@ -83,15 +85,15 @@ export default function Skills({ theme }) {
               <span style={{ fontSize: 14 }}>{t.icon}</span>{t.name}
             </motion.div>
           ))}
-        </div>
-      </motion.div>
+        </Stagger>
+      </div>
 
       {/* Certifications */}
-      <motion.div variants={fadeUp}>
+      <div>
         <div style={{ textAlign: "center", marginBottom: 18 }}>
           <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: theme.textMuted }}>Certifications</span>
         </div>
-        <div style={{
+        <Stagger style={{
           display: "flex", justifyContent: "center",
           flexDirection: isMobile ? "column" : "row",
           gap: isMobile ? 12 : 16, flexWrap: "wrap",
@@ -120,8 +122,8 @@ export default function Skills({ theme }) {
               </div>
             </motion.div>
           ))}
-        </div>
-      </motion.div>
+        </Stagger>
+      </div>
     </Section>
   );
 }

@@ -11,7 +11,13 @@ export default function SectionTitle({ title, subtitle, label, light, theme }) {
   const { isMobile } = useBreakpoint();
 
   return (
-    <motion.div variants={fadeUp} style={{ textAlign: "center", marginBottom: isMobile ? 36 : 56 }}>
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-80px" }}
+      variants={fadeUp}
+      style={{ textAlign: "center", marginBottom: isMobile ? 36 : 56 }}
+    >
       {label && (
         <div style={{
           display:       "inline-flex",

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Mail, Linkedin, Github, Send, CheckCircle } from "lucide-react";
 import Section from "./ui/Section";
 import SectionTitle from "./ui/SectionTitle";
+import { Stagger } from "./ui/ScrollReveal";
 import { useBreakpoint } from "../hooks/useBreakpoint";
 
 const fadeUp = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.175, 0.885, 0.32, 1.275] } } };
@@ -48,7 +49,7 @@ export default function Contact({ theme }) {
     <Section id="contact" theme={theme}>
       <SectionTitle label="Contact" title="Get In Touch" subtitle="Open to supply chain, operations, and analytics opportunities" theme={theme} />
 
-      <div style={{
+      <Stagger style={{
         display: "grid",
         gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(280px, 1fr))",
         gap: isMobile ? 20 : 36,
@@ -171,7 +172,7 @@ export default function Contact({ theme }) {
             </div>
           )}
         </motion.div>
-      </div>
+      </Stagger>
     </Section>
   );
 }

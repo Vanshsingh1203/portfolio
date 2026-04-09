@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Calendar, ChevronRight, MapPin } from "lucide-react";
 import Section from "./ui/Section";
 import SectionTitle from "./ui/SectionTitle";
+import { Stagger } from "./ui/ScrollReveal";
 import { EXPERIENCES } from "../data";
 import { useBreakpoint } from "../hooks/useBreakpoint";
 
@@ -21,7 +22,7 @@ export default function Experience({ theme }) {
     <Section id="experience" variant="alt" theme={theme}>
       <SectionTitle label="Career" title="Work Experience" subtitle="Building operational excellence through data and process improvement" theme={theme} />
 
-      <div style={{ maxWidth: 820, margin: "0 auto", position: "relative" }}>
+      <Stagger style={{ maxWidth: 820, margin: "0 auto", position: "relative" }}>
         {/* Vertical connector pipe */}
         <div style={{
           position: "absolute", left: pipeLeft, top: 0, bottom: 0,
@@ -98,7 +99,7 @@ export default function Experience({ theme }) {
             </div>
           </motion.div>
         ))}
-      </div>
+      </Stagger>
     </Section>
   );
 }

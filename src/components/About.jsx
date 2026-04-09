@@ -4,6 +4,7 @@ import { GraduationCap, Layers, Database, TrendingUp, Globe } from "lucide-react
 import Section from "./ui/Section";
 import SectionTitle from "./ui/SectionTitle";
 import Card from "./ui/Card";
+import { Stagger } from "./ui/ScrollReveal";
 import { useBreakpoint } from "../hooks/useBreakpoint";
 
 const fadeUp  = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.175, 0.885, 0.32, 1.275] } } };
@@ -28,7 +29,7 @@ export default function About({ theme }) {
     <Section id="about" theme={theme}>
       <SectionTitle label="Background" title="About Me" subtitle="Part engineer, part analyst — full-time problem solver" theme={theme} />
 
-      <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(300px, 1fr))", gap: isMobile ? 20 : 36 }}>
+      <Stagger style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(300px, 1fr))", gap: isMobile ? 20 : 36 }}>
 
         {/* Left — bio + education */}
         <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -127,7 +128,7 @@ export default function About({ theme }) {
             </div>
           </motion.div>
         </div>
-      </div>
+      </Stagger>
     </Section>
   );
 }

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ExternalLink, Github, CheckCircle, ChevronRight } from "lucide-react";
 import Section from "./ui/Section";
 import SectionTitle from "./ui/SectionTitle";
+import { Stagger } from "./ui/ScrollReveal";
 import { PROJECTS } from "../data";
 import { useBreakpoint } from "../hooks/useBreakpoint";
 
@@ -24,7 +25,7 @@ export default function Projects({ theme }) {
       <SectionTitle label="Selected Work" title="Featured Projects" subtitle="Real problems, real data, deployed in production" theme={theme} />
 
       {/* ── Featured ── */}
-      <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? 16 : 24, marginBottom: isMobile ? 40 : 64 }}>
+      <Stagger style={{ display: "flex", flexDirection: "column", gap: isMobile ? 16 : 24, marginBottom: isMobile ? 40 : 64 }}>
         {featured.map((p, idx) => (
           <motion.div key={idx} variants={fadeUp}
             whileHover={{ y: -3, transition: { duration: 0.22 } }}
@@ -114,20 +115,26 @@ export default function Projects({ theme }) {
             </div>
           </motion.div>
         ))}
-      </div>
+      </Stagger>
 
       {/* ── Academic ── */}
-      <motion.div variants={fadeUp}>
-        <div style={{ textAlign: "center", marginBottom: isMobile ? 20 : 32 }}>
+      <div>
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={fadeUp}
+          style={{ textAlign: "center", marginBottom: isMobile ? 20 : 32 }}
+        >
           <div style={{ display: "inline-flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
             <span style={{ width: 20, height: 1, background: theme.border, display: "inline-block" }} />
             <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: theme.textMuted }}>Research & Academic Work</span>
             <span style={{ width: 20, height: 1, background: theme.border, display: "inline-block" }} />
           </div>
           <p style={{ fontSize: 12, color: theme.textFaint, margin: 0 }}>Engineering projects from university and competition teams</p>
-        </div>
+        </motion.div>
 
-        <div style={{ display: "grid", gridTemplateColumns: `repeat(auto-fit, minmax(${isMobile ? "100%" : "260px"}, 1fr))`, gap: isMobile ? 12 : 16 }}>
+        <Stagger style={{ display: "grid", gridTemplateColumns: `repeat(auto-fit, minmax(${isMobile ? "100%" : "260px"}, 1fr))`, gap: isMobile ? 12 : 16 }}>
           {other.map((p, idx) => (
             <motion.div key={idx} variants={scaleIn}
               whileHover={{ y: -4, boxShadow: "var(--shadow-floating)", transition: { duration: 0.22 } }}
@@ -189,8 +196,8 @@ export default function Projects({ theme }) {
               )}
             </motion.div>
           ))}
-        </div>
-      </motion.div>
+        </Stagger>
+      </div>
     </Section>
   );
 }
