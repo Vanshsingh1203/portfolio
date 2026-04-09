@@ -5,6 +5,7 @@ import Section from "./ui/Section";
 import SectionTitle from "./ui/SectionTitle";
 import Card from "./ui/Card";
 import { Stagger } from "./ui/ScrollReveal";
+import TiltCard from "./ui/TiltCard";
 import { SKILLS, TOOLS } from "../data";
 import { useBreakpoint } from "../hooks/useBreakpoint";
 
@@ -100,7 +101,7 @@ export default function Skills({ theme }) {
           alignItems: isMobile ? "stretch" : "center",
         }}>
           {CERTS.map((c, i) => (
-            <motion.div key={i} variants={scaleIn}
+            <TiltCard key={i} variants={scaleIn} maxDeg={4}
               whileHover={{ y: -4, boxShadow: "var(--shadow-floating)", transition: { duration: 0.2 } }}
               style={{
                 background: theme.card, borderRadius: 14, padding: isMobile ? "16px 20px" : "20px 26px",
@@ -120,7 +121,7 @@ export default function Skills({ theme }) {
                 <div style={{ fontSize: isMobile ? 13 : 14, fontWeight: 700, color: theme.text, marginBottom: 3 }}>{c.name}</div>
                 <div style={{ fontSize: 11, color: theme.textMuted }}>{c.org}</div>
               </div>
-            </motion.div>
+            </TiltCard>
           ))}
         </Stagger>
       </div>

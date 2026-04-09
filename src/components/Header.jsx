@@ -3,7 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import { NAV } from "../data";
 
-export default function Header({ activeSection, theme, dark, toggleDark }) {
+export default function Header({ activeSection, theme, dark, onToggle }) {
+  const fireToggle = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    onToggle({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+  };
   const [scrolled,  setScrolled]  = useState(false);
   const [menuOpen,  setMenuOpen]  = useState(false);
 
@@ -127,7 +131,7 @@ export default function Header({ activeSection, theme, dark, toggleDark }) {
               color: scrolled ? theme.textMuted : "rgba(224,229,236,0.4)",
             }}>ONLINE</span>
 
-            <motion.button onClick={toggleDark} whileTap={{ scale: 0.88 }} style={{
+            <motion.button onClick={fireToggle} whileTap={{ scale: 0.88 }} style={{
               background:  scrolled ? theme.card : "rgba(255,255,255,0.07)",
               border:     `1px solid ${scrolled ? theme.border : "rgba(255,255,255,0.12)"}`,
               borderRadius: 9, padding: "9px 10px", cursor: "pointer",
@@ -143,7 +147,7 @@ export default function Header({ activeSection, theme, dark, toggleDark }) {
 
         {/* Mobile controls */}
         <div className="mobile-btn" style={{ alignItems: "center", gap: 8 }}>
-          <motion.button onClick={toggleDark} whileTap={{ scale: 0.88 }} style={{
+          <motion.button onClick={fireToggle} whileTap={{ scale: 0.88 }} style={{
             background:  "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)",
             borderRadius: 9, padding: "11px", cursor: "pointer",
             color: "#e0e5ec", display: "flex", minHeight: 44, minWidth: 44,

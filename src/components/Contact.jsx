@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Mail, Linkedin, Github, Send, CheckCircle } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Mail, Linkedin, Github, Send, CheckCircle, Copy } from "lucide-react";
 import Section from "./ui/Section";
 import SectionTitle from "./ui/SectionTitle";
 import { Stagger } from "./ui/ScrollReveal";
@@ -9,7 +9,7 @@ import { useBreakpoint } from "../hooks/useBreakpoint";
 const fadeUp = { hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.175, 0.885, 0.32, 1.275] } } };
 
 const LINKS = [
-  { icon: <Mail size={17} />,     label: "singh.v2@northeastern.edu",      href: "mailto:singh.v2@northeastern.edu" },
+  { icon: <Mail size={17} />,     label: "singh.v2@northeastern.edu",      href: "mailto:singh.v2@northeastern.edu", copy: "singh.v2@northeastern.edu" },
   { icon: <Linkedin size={17} />, label: "linkedin.com/in/vansh-singh1203", href: "https://www.linkedin.com/in/vansh-singh1203" },
   { icon: <Github size={17} />,   label: "github.com/Vanshsingh1203",       href: "https://github.com/Vanshsingh1203" },
 ];
@@ -18,6 +18,18 @@ export default function Contact({ theme }) {
   const { isMobile } = useBreakpoint();
   const [form,    setForm]    = useState({ name: "", email: "", message: "" });
   const [status,  setStatus]  = useState(null);
+  const [toast,   setToast]   = useState(null);
+
+  useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(null), 2500);
+    return () => clearTimeout(t);
+  }, [toast]);
+
+  const copyEmail = (e, text) => {
+    e.preventDefault();
+    navigator.clipboard.writeText(text).then(() => setToast("Email copied!")).catch(() => setToast("Copy failed"));
+  };
   const [sending, setSending] = useState(false);
 
   const submit = async (e) => {
@@ -64,7 +76,9 @@ export default function Contact({ theme }) {
 
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {LINKS.map((l, i) => (
-              <motion.a key={i} href={l.href} target="_blank" rel="noreferrer"
+              <motion.a key={i} href={l.href}
+                target={l.copy ? undefined : "_blank"} rel="noreferrer"
+                onClick={l.copy ? (e) => copyEmail(e, l.copy) : undefined}
                 whileHover={{ x: isMobile ? 0 : 5, transition: { duration: 0.15 } }}
                 whileTap={{ scale: 0.98 }}
                 style={{
@@ -72,6 +86,7 @@ export default function Contact({ theme }) {
                   background: theme.card, borderRadius: 13, textDecoration: "none",
                   color: theme.textSec, fontSize: 12, fontWeight: 500,
                   boxShadow: "var(--shadow-card)", transition: "background 0.3s", minHeight: 56,
+                  cursor: l.copy ? "copy" : "pointer",
                 }}
               >
                 <div style={{
@@ -81,9 +96,10 @@ export default function Contact({ theme }) {
                 }}>
                   {l.icon}
                 </div>
-                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.02em", lineHeight: 1.3, wordBreak: "break-all" }}>
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, letterSpacing: "0.02em", lineHeight: 1.3, wordBreak: "break-all", flex: 1 }}>
                   {l.label}
                 </span>
+                {l.copy && <Copy size={13} color={theme.textFaint} style={{ flexShrink: 0 }} />}
               </motion.a>
             ))}
           </div>
@@ -173,6 +189,37 @@ export default function Contact({ theme }) {
           )}
         </motion.div>
       </Stagger>
+
+      {/* Copy toast */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: 16, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0,  scale: 1    }}
+            exit={{    opacity: 0, y: 16, scale: 0.95 }}
+            transition={{ duration: 0.22 }}
+            style={{
+              position:       "fixed",
+              bottom:          90,
+              right:           24,
+              zIndex:          300,
+              background:      theme.card,
+              borderRadius:    12,
+              padding:        "11px 18px",
+              boxShadow:      "var(--shadow-floating)",
+              display:        "flex",
+              alignItems:     "center",
+              gap:             8,
+              border:         `1px solid ${theme.border}`,
+            }}
+          >
+            <span className="led-green" style={{ width: 6, height: 6 }} />
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: theme.text, fontWeight: 600 }}>
+              {toast}
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Section>
   );
 }

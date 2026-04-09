@@ -4,6 +4,7 @@ import { ExternalLink, Github, CheckCircle, ChevronRight } from "lucide-react";
 import Section from "./ui/Section";
 import SectionTitle from "./ui/SectionTitle";
 import { Stagger } from "./ui/ScrollReveal";
+import TiltCard from "./ui/TiltCard";
 import { PROJECTS } from "../data";
 import { useBreakpoint } from "../hooks/useBreakpoint";
 
@@ -27,7 +28,7 @@ export default function Projects({ theme }) {
       {/* ── Featured ── */}
       <Stagger style={{ display: "flex", flexDirection: "column", gap: isMobile ? 16 : 24, marginBottom: isMobile ? 40 : 64 }}>
         {featured.map((p, idx) => (
-          <motion.div key={idx} variants={fadeUp}
+          <TiltCard key={idx} variants={fadeUp}
             whileHover={{ y: -3, transition: { duration: 0.22 } }}
             style={{ background: theme.card, borderRadius: 18, padding: cardPad, boxShadow: "var(--shadow-card)", position: "relative", overflow: "hidden", transition: "background 0.4s" }}
           >
@@ -113,7 +114,7 @@ export default function Projects({ theme }) {
                 </span>
               ))}
             </div>
-          </motion.div>
+          </TiltCard>
         ))}
       </Stagger>
 
@@ -136,7 +137,7 @@ export default function Projects({ theme }) {
 
         <Stagger style={{ display: "grid", gridTemplateColumns: `repeat(auto-fit, minmax(${isMobile ? "100%" : "260px"}, 1fr))`, gap: isMobile ? 12 : 16 }}>
           {other.map((p, idx) => (
-            <motion.div key={idx} variants={scaleIn}
+            <TiltCard key={idx} variants={scaleIn} maxDeg={4}
               whileHover={{ y: -4, boxShadow: "var(--shadow-floating)", transition: { duration: 0.22 } }}
               style={{
                 background: theme.card, borderRadius: 15, padding: isMobile ? "18px 16px" : "22px 20px",
@@ -194,7 +195,7 @@ export default function Projects({ theme }) {
                   )}
                 </div>
               )}
-            </motion.div>
+            </TiltCard>
           ))}
         </Stagger>
       </div>
