@@ -10,10 +10,11 @@ export const PROJECTS = [
     desc:     "Production-grade donation tracking platform built for a real nonprofit. Manages the full receive → store → distribute pipeline with role-based access control, real-time multi-device sync, and bilingual support.",
     features: ["4 User Roles with Auth", "EN/ES Language Toggle", "Dark & Light Mode", "Real-Time KPI Dashboard", "Shelf-Location Tracking", "People Served Metrics", "Excel Report Generation", "Onboarding Tutorial"],
     tech:     ["React", "Supabase", "PostgreSQL", "Recharts", "SheetJS", "Vercel"],
-    liveUrl:  "https://ngo-inventory-v2.vercel.app",
+    liveUrl:  "https://ngo-inventory-v2-7pqg.vercel.app/",
     codeUrl:  "https://github.com/Vanshsingh1203/ngo-inventory-v2",
     color:    "#00ced1",
     icon:     <Package size={22} />,
+    image:    "/images/ngo-dashboard.png",
     featured: true,
   },
   {
@@ -26,6 +27,7 @@ export const PROJECTS = [
     codeUrl:  "https://github.com/Vanshsingh1203/chainguard-pharma-dashboard",
     color:    "#00d4aa",
     icon:     <Thermometer size={22} />,
+    image:    "/images/chainguard-dashboard.png",
     featured: true,
   },
   {
@@ -38,6 +40,7 @@ export const PROJECTS = [
     codeUrl:  "https://github.com/Vanshsingh1203/demand-forecast",
     color:    "#a78bfa",
     icon:     <BarChart3 size={22} />,
+    image:    "/images/demand-forecast-dashboard.png",
     featured: true,
   },
   {
@@ -50,6 +53,7 @@ export const PROJECTS = [
     codeUrl:  "https://github.com/Vanshsingh1203/manufacturing-operations-platform",
     color:    "#f97316",
     icon:     <Factory size={22} />,
+    image:    "/images/mop-dashboard.png",
     featured: true,
   },
   {

@@ -122,6 +122,8 @@ export default function MouseTrail({ dark }) {
     const ghosts    = [];  // ghost reticle echoes
     const mouse     = { x: -200, y: -200 };
     const prev      = { x: -200, y: -200 };
+    const render    = { x: -200, y: -200 }; // smoothed draw position
+    const magnet    = { el: null };          // currently hovered interactive el
     let   animId    = null;
     let   lastGhost = 0;
 
@@ -182,11 +184,48 @@ export default function MouseTrail({ dark }) {
         lastGhost = now;
       }
     };
+    // ── Magnetic cursor ───────────────────────────────────────────────
+    const onMouseOver = (e) => {
+      magnet.el = e.target.closest('a, button, [role="button"]');
+    };
+    const onMouseOut = (e) => {
+      const el = e.target.closest('a, button, [role="button"]');
+      if (el) magnet.el = null;
+    };
+    window.addEventListener("mouseover", onMouseOver);
+    window.addEventListener("mouseout",  onMouseOut);
     window.addEventListener("mousemove", onMove);
 
     // ── Animation loop ────────────────────────────────────────────────
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // ── Compute target position (raw mouse + magnetic pull) ───────
+      let targetX = mouse.x;
+      let targetY = mouse.y;
+      let isMagnetic = false;
+
+      if (magnet.el) {
+        const rect = magnet.el.getBoundingClientRect();
+        const cx   = rect.left + rect.width  / 2;
+        const cy   = rect.top  + rect.height / 2;
+        const dx   = cx - mouse.x;
+        const dy   = cy - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const FIELD = 90; // magnetic field radius in px
+
+        if (dist < FIELD) {
+          const strength = Math.pow(1 - dist / FIELD, 1.6) * 0.42;
+          targetX    = mouse.x + dx * strength;
+          targetY    = mouse.y + dy * strength;
+          isMagnetic = true;
+        }
+      }
+
+      // ── Lerp render position toward target ────────────────────────
+      const lerpFactor = isMagnetic ? 0.13 : 0.22;
+      render.x += (targetX - render.x) * lerpFactor;
+      render.y += (targetY - render.y) * lerpFactor;
 
       // Ghost reticles (drawn first, underneath)
       for (let i = ghosts.length - 1; i >= 0; i--) {
@@ -219,7 +258,6 @@ export default function MouseTrail({ dark }) {
         }
 
         if (p.type === "cross") {
-          // Machining cross-tick mark
           ctx.strokeStyle = p.color;
           ctx.lineWidth   = 0.9;
           ctx.beginPath();
@@ -229,7 +267,6 @@ export default function MouseTrail({ dark }) {
           ctx.lineTo(p.x, p.y + r * 1.4);
           ctx.stroke();
         } else {
-          // Spark dot
           ctx.fillStyle = p.color;
           ctx.beginPath();
           ctx.arc(p.x, p.y, Math.max(r, 0.3), 0, Math.PI * 2);
@@ -239,10 +276,12 @@ export default function MouseTrail({ dark }) {
         ctx.restore();
       }
 
-      // Main reticle — drawn last (on top)
+      // Main reticle — drawn at smoothed/attracted position
       if (mouse.x > -100) {
-        drawReticle(ctx, mouse.x, mouse.y, 0.72, 1);
-        drawCoords(ctx, mouse.x, mouse.y, dark);
+        // Slightly enlarge reticle when magnetic
+        const scale = isMagnetic ? 1.22 : 1;
+        drawReticle(ctx, render.x, render.y, 0.72, scale);
+        drawCoords(ctx, render.x, render.y, dark);
       }
 
       animId = requestAnimationFrame(draw);
@@ -251,8 +290,10 @@ export default function MouseTrail({ dark }) {
     animId = requestAnimationFrame(draw);
 
     return () => {
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize",    resize);
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseover", onMouseOver);
+      window.removeEventListener("mouseout",  onMouseOut);
       cancelAnimationFrame(animId);
     };
   }, [dark]);

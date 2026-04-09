@@ -30,11 +30,28 @@ export default function Projects({ theme }) {
         {featured.map((p, idx) => (
           <TiltCard key={idx} variants={fadeUp}
             whileHover={{ y: -3, transition: { duration: 0.22 } }}
-            style={{ background: theme.card, borderRadius: 18, padding: cardPad, boxShadow: "var(--shadow-card)", position: "relative", overflow: "hidden", transition: "background 0.4s" }}
+            style={{ background: theme.card, borderRadius: 18, padding: p.image ? (isMobile ? "16px 16px 20px" : "24px 30px 32px") : cardPad, boxShadow: "var(--shadow-card)", position: "relative", overflow: "hidden", transition: "background 0.4s" }}
           >
             <Screw style={{ top: 11, left: 11 }} /> <Screw style={{ top: 11, right: 11 }} />
             <Screw style={{ bottom: 11, left: 11 }} /> <Screw style={{ bottom: 11, right: 11 }} />
-            <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${p.color}, ${p.color}60, transparent)` }} />
+
+            {/* Screenshot preview */}
+            {p.image && (
+              <div style={{ position: "relative", marginBottom: 20, borderRadius: 12, overflow: "hidden", height: isMobile ? 140 : 190 }}>
+                <img
+                  src={p.image} alt={`${p.title} preview`}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top", display: "block", borderRadius: 12 }}
+                  loading="lazy"
+                />
+                {/* Gradient fade into card background */}
+                <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to bottom, transparent 35%, ${theme.card} 100%)`, borderRadius: 12 }} />
+                {/* Accent color border at top */}
+                <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${p.color}, ${p.color}60, transparent)`, borderRadius: "12px 12px 0 0" }} />
+              </div>
+            )}
+
+            {/* Accent stripe (no image fallback) */}
+            {!p.image && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: `linear-gradient(90deg, ${p.color}, ${p.color}60, transparent)` }} />}
 
             {/* Header: stacks on mobile */}
             <div style={{
